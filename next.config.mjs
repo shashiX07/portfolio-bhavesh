@@ -13,6 +13,11 @@ try {
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  functions: {
+    'api/contact': {
+      maxDuration: 60,
+    },
+  },
   reactStrictMode: true,
   env: {
     SMTP_HOST: process.env.SMTP_HOST,
@@ -36,11 +41,6 @@ const nextConfig = {
     parallelServerBuildTraces: true,
     parallelServerCompiles: true,
     serverComponentsExternalPackages: ['nodemailer'],
-  },
-  functions: {
-    'api/contact': {
-      maxDuration: 60, // Set to 60 seconds instead of default
-    },
   },
 }
 
