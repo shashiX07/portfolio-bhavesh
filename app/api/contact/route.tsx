@@ -1,6 +1,11 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
+// Add this line to extend function timeout for deployment platforms that support it
+export const config = {
+  maxDuration: 60
+};
+
 export async function POST(request: Request) {
   try {
     // Get form data
@@ -15,11 +20,12 @@ export async function POST(request: Request) {
       );
     }
     
-    // Create email transporter
+    // Create email transporter with optimized settings for Gmail
     const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: parseInt(process.env.SMTP_PORT || '587'),
-      secure: process.env.SMTP_PORT === '465', // true for 465, false for other ports
+      host: "smtp.gmail.com",
+      port: 465, // Use SSL port
+      secure: true, // Use SSL
+      connectionTimeout: 10000, // 10 second timeout
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASSWORD,
@@ -28,17 +34,11 @@ export async function POST(request: Request) {
     
     // Email content
     const mailOptions = {
-      from: `"Portfolio Contact" <${process.env.FROM_EMAIL}>`,
+      from: `Portfolio <${process.env.FROM_EMAIL}>`,
       to: process.env.TO_EMAIL,
       replyTo: email,
       subject: `New Contact Form Submission from ${name}`,
-      text: `
-        Name: ${name}
-        Email: ${email}
-        
-        Message:
-        ${message}
-      `,
+      text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
       html: `
         <h3>New Contact Form Submission</h3>
         <p><strong>Name:</strong> ${name}</p>
@@ -48,17 +48,33 @@ export async function POST(request: Request) {
       `,
     };
     
-    // Send email
-    await transporter.sendMail(mailOptions);
+    // Send email with promise and timeout protection
+    await new Promise((resolve, reject) => {
+      // Add timeout to prevent hanging
+      const timeoutId = setTimeout(() => {
+        reject(new Error('SMTP connection timed out'));
+      }, 25000); // 25 second timeout
+      
+      transporter.sendMail(mailOptions, (error, info) => {
+        clearTimeout(timeoutId);
+        if (error) {
+          console.error('SMTP error:', error);
+          reject(error);
+        } else {
+          resolve(info);
+        }
+      });
+    });
     
     return NextResponse.json(
       { success: true, message: 'Email sent successfully' },
       { status: 200 }
     );
   } catch (error) {
+    // Ensure we always return a proper JSON response even for errors
     console.error('Error sending email:', error);
     return NextResponse.json(
-      { error: 'Failed to send email', details: (error as Error).message },
+      { error: 'Failed to send email', details: error instanceof Error ? error.message : String(error) },
       { status: 500 }
     );
   }

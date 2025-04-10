@@ -113,17 +113,23 @@ export default function Home() {
       
       const response = await fetch('/api/contact', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
       
-      const data = await response.json();
-      
+      // First check if response is ok before trying to parse as JSON
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to send message');
+        // Try to get error as JSON but handle non-JSON errors too
+        try {
+          const errorData = await response.json();
+          throw new Error(errorData.error || `Request failed with status ${response.status}`);
+        } catch (jsonError) {
+          // If JSON parsing fails, use status text
+          throw new Error(`Request failed: ${response.statusText || response.status}`);
+        }
       }
+      
+      const data = await response.json();
       
       // Success
       setFormStatus({
@@ -150,6 +156,7 @@ export default function Home() {
         success: false,
         error: (error as Error).message
       });
+      console.error('Form submission error:', error);
     }
   };
 
