@@ -23,7 +23,7 @@ export async function POST(request: Request) {
     // Create email transporter with optimized settings for Gmail
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
-      port: 587, // Use SSL port
+      port: 465, // Use SSL port
       secure: true, // Use SSL
       connectionTimeout: 100000, // 100 second timeout
       auth: {
