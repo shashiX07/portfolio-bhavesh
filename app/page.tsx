@@ -257,11 +257,12 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section id="home" className="h-screen flex flex-col items-center justify-center relative">
+      <section id="home" className="min-h-screen pt-12 md:pt-8 flex flex-col items-center justify-center relative">
         {/* Profile Picture */}
-        <div className="mb-8">
+        <div className="mb-0 mt-16">
           <Avatar className="h-32 w-32 border-4 border-emerald-500 transition-all duration-300 hover:scale-105">
             <AvatarImage src="/profile.jpg" alt="Bhavesh Meena" />
+            <AvatarFallback>BM</AvatarFallback>
           </Avatar>
         </div>
 
