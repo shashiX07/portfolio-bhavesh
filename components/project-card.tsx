@@ -51,7 +51,7 @@ export default function ProjectCard({ project }: { project: Project }) {
         </div>
 
         <Button asChild variant="ghost" className="group/button hover:bg-emerald-500/20 text-emerald-400">
-          <a href={project.link}  rel="noopener noreferrer">
+          <a href={project.link} target="_blank" rel="noopener noreferrer">
             View Project
             <ExternalLink className="ml-2 w-4 h-4 transition-transform group-hover/button:translate-x-1" />
           </a>

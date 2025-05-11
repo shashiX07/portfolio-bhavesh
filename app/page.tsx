@@ -162,18 +162,18 @@ export default function Home() {
 
   const projects = [
     {
-      title: "E-Commerce Platform",
-      description: "A full-featured online store with cart functionality and payment processing",
-      image: "/placeholder.svg?height=400&width=600",
-      tags: ["React", "Node.js", "MongoDB", "Stripe"],
-      link: "#",
+      title: "Adobe Premier Pro",
+      description: "Prefessional Level Video edition using adobe Premier Pro",
+      image: "premierpro.png",
+      tags: ["Adobe", "Editing", "Video", "Graphics"],
+      link: "https://www.instagram.com/bhavezyyy?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
     },
     {
-      title: "Social Media Dashboard",
-      description: "Analytics dashboard for tracking engagement across multiple platforms",
-      image: "/placeholder.svg?height=400&width=600",
-      tags: ["React", "D3.js", "Firebase", "Material UI"],
-      link: "#",
+      title: "Coming Soon",
+      description: "I keep boosting my skills and learning new things...more skills coming soon",
+      image: "comingsoon.png",
+      tags: ["Come-back-soon", "Learning", "Skills", "more"],
+      link: "https://www.instagram.com/bhavezyyy?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
     }
   ]
 
@@ -185,7 +185,7 @@ export default function Home() {
     { name: "Figma", level: 75 },
     { name: "UI/UX Design", level: 85 },
     { name: "CSS/SCSS", level: 90 },
-    { name: "Responsive Design", level: 95 },
+    { name: "Adobe PremierPro", level: 95 },
   ]
 
   return (
@@ -267,9 +267,9 @@ export default function Home() {
       <section id="home" className="min-h-screen pt-12 md:pt-8 flex flex-col items-center justify-center relative">
         {/* Profile Picture */}
         <div className="mb-0 mt-16">
-          <Avatar className="h-32 w-32 border-4 border-emerald-500 transition-all duration-300 hover:scale-105">
+          <Avatar className="h-32 w-32 border-2 border-emerald-500 transition-all duration-300 hover:scale-105">
             <AvatarImage src="/profile.jpg" alt="Bhavesh Meena" />
-            <AvatarFallback>BM</AvatarFallback>
+            <AvatarFallback>Bhavesh</AvatarFallback>
           </Avatar>
         </div>
 
